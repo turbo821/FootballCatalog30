@@ -1,3 +1,4 @@
+using FootballCatalog30.Api.Interfaces;
 using FootballCatalog30.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
@@ -8,28 +9,31 @@ namespace FootballCatalog30.Api.Controllers
     [Route("api/[controller]")]
     public class FootballController : ControllerBase
     {
-        private readonly ILogger<FootballController> _logger;
+        private readonly IFootballService _footballService;
 
-        public FootballController(ILogger<FootballController> logger)
+        public FootballController(IFootballService footballService)
         {
-            _logger = logger;
+            _footballService = footballService;
         }
 
         [HttpGet]
-        public IActionResult GetAllPlayers()
+        public async Task<IActionResult> GetAllPlayers()
         {
-            return Ok();
+            IEnumerable<FootballPlayer> players = await _footballService.GetAllPlayers();
+            return Ok(players);
         }
 
         [HttpPost]
         public IActionResult AddPlayer(FootballPlayer player)
         {
+            _footballService.AddPlayer(player);
             return Ok();
         }
 
         [HttpPatch]
         public IActionResult UpdatePlayer(FootballPlayer player)
         {
+            _footballService.UpdatePlayer(player);
             return Ok();
         }
 
@@ -37,6 +41,7 @@ namespace FootballCatalog30.Api.Controllers
         [Route("{id}")]
         public IActionResult DeletePlayer(int id)
         {
+            _footballService.DeletePlayer(id);
             return Ok();
         }
     }

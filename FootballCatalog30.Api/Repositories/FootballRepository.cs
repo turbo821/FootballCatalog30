@@ -15,7 +15,8 @@ namespace FootballCatalog30.Api.Repositories
 
         public async Task<IEnumerable<FootballPlayer>> GetAllPlayers()
         {
-            return await _db.Players.AsNoTracking().ToListAsync();
+            IEnumerable<FootballPlayer> players = await _db.Players.AsNoTracking().ToListAsync();
+            return players;
         }
 
         public async Task AddPlayer(FootballPlayer player)

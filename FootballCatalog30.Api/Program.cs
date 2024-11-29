@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connect));
 builder.Services.AddScoped<IFootballRepository, FootballRepository>();
 builder.Services.AddScoped<IFootballService, FootballService>();
