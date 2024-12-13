@@ -15,14 +15,35 @@ namespace FootballCatalog30.Api.Repositories
 
         public async Task<IEnumerable<FootballPlayer>> GetAllPlayers()
         {
-            IEnumerable<FootballPlayer> players = await _db.Players.AsNoTracking().ToListAsync();
+            IEnumerable<FootballPlayer> players = await _db.Players.AsNoTracking().Include(p => p.Command).Include(p => p.Country).ToListAsync();
             return players;
+        }
+        public async Task<FootballPlayer?> GetPlayerById(int id)
+        {
+            return await _db.Players.Include(p => p.Command).Include(p => p.Country).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task AddPlayer(FootballPlayer player)
         {
             _db.Players.Add(player);
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<int> AddAndReturnCommandId(string searchCommandTitle)
+        {
+            FootballCommand? command = await _db.Commands.FirstOrDefaultAsync(c => c.Title == searchCommandTitle);
+            if (command is null)
+            {
+                command = await CreateCommand(searchCommandTitle);
+            }
+            return command.Id;
+        }
+        private async Task<FootballCommand> CreateCommand(string commandTitle)
+        {
+            FootballCommand newCommand = new FootballCommand() { Title = commandTitle };
+            _db.Commands.Add(newCommand);
+            await _db.SaveChangesAsync();
+            return newCommand;
         }
 
         public async Task UpdatePlayer(FootballPlayer player)

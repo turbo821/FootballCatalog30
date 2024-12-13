@@ -17,9 +17,19 @@ namespace FootballCatalog30.Api.Services
             return await _repo.GetAllPlayers();
         }
 
+        public async Task<FootballPlayer?> GetPlayerById(int id)
+        {
+            return await _repo.GetPlayerById(id);
+        }
+
         public async Task AddPlayer(FootballPlayer player)
         {
             await _repo.AddPlayer(player);
+        }
+
+        public async Task<int> GetCommandId(string searchCommandTitle)
+        {
+            return await _repo.AddAndReturnCommandId(searchCommandTitle);
         }
 
         public async Task UpdatePlayer(FootballPlayer player)
