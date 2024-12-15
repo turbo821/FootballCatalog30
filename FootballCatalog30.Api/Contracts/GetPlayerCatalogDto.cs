@@ -6,9 +6,9 @@ namespace FootballCatalog30.Api.Contracts
         int Id,
         string Name,
         string Surname,
-        string Sex,
+        Sex Sex,
         DateTime BirthDate,
-        string? CommandTitle,
-        string? CountryTitle
+        string CommandTitle,
+        string CountryTitle
     );
 }

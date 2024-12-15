@@ -1,5 +1,7 @@
 ﻿using FootballCatalog30.Api.Interfaces;
 using FootballCatalog30.Api.Models;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FootballCatalog30.Api.Services
 {
@@ -22,9 +24,9 @@ namespace FootballCatalog30.Api.Services
             return await _repo.GetPlayerById(id);
         }
 
-        public async Task AddPlayer(FootballPlayer player)
+        public async Task<FootballPlayer> AddPlayer(FootballPlayer player)
         {
-            await _repo.AddPlayer(player);
+            return await _repo.AddPlayer(player);
         }
 
         public async Task<int> GetCommandId(string searchCommandTitle)
@@ -32,14 +34,19 @@ namespace FootballCatalog30.Api.Services
             return await _repo.AddAndReturnCommandId(searchCommandTitle);
         }
 
-        public async Task UpdatePlayer(FootballPlayer player)
+        public async Task<FootballPlayer> UpdatePlayer(FootballPlayer player)
         {
-            await _repo.UpdatePlayer(player);
+            return await _repo.UpdatePlayer(player);
         }
 
         public async Task DeletePlayer(int id)
         {
             await _repo.DeletePlayer(id);
+        }
+
+        public async Task<IEnumerable<FootballCommand>> GetAllCommands()
+        {
+            return await _repo.GetAllCommands();
         }
     }
 }
