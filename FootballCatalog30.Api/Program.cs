@@ -14,11 +14,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        //policy.WithOrigins(allowedOrigins)
-        //      .AllowAnyHeader()
-        //      .AllowAnyMethod()
-        //      .AllowCredentials();
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -26,7 +22,6 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -46,7 +41,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapHub<PlayersHub>("/playersHub");
 app.MapControllers();
