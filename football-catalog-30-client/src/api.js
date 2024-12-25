@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost:7200/api/football",
+  baseURL: baseURL,
 });
-const hubUrl = "https://localhost:7200/playersHub";
+
+const hubUrl = process.env.REACT_APP_HUB_URL;
 
 export { api, hubUrl };
