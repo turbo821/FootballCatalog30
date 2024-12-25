@@ -137,7 +137,6 @@ COPY public."Commands" ("Id", "Title") FROM stdin;
 4	Милан
 6	РКС
 7	FIFA
-10	string
 \.
 
 
