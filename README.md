@@ -25,10 +25,10 @@ Web-приложение «Каталог футболистов 3.0». Язык
 
 ## Описание файлов
 
-FootballCatalog30.Api -- api aspnet core
-football-catalog-30-client -- клиент react
-postgres_data -- появляется после запуска docker-compose, здесь хранятся данные postgres volumes
-footballdb_dump.sql -- используется для дампа БД при первом запуске docker-compose
+- FootballCatalog30.Api - api aspnet core
+- football-catalog-30-client - клиент react
+- postgres_data - появляется после запуска docker-compose, здесь хранятся данные postgres volumes
+- footballdb_dump.sql - используется для дампа БД при первом запуске docker-compose
 
 ## Как запустить в Docker
 
