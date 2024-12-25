@@ -1,0 +1,40 @@
+services:
+  database:
+    image: postgres:16
+    container_name: football_catalog_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: footballdb
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./footballdb_dump.sql:/docker-entrypoint-initdb.d/footballdb_dump.sql
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: FootballCatalog30.Api/Dockerfile
+    container_name: football_catalog_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ALLOWED_ORIGINS=http://localhost:3000
+      - ConnectionStrings__DefaultConnection=Host=database;Port=5432;Database=footballdb;Username=postgres;Password=postgres
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+
+  client:
+    build:
+      context: ./football-catalog-30-client
+      dockerfile: Dockerfile
+    container_name: football_catalog_client
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080/api/football
+      - REACT_APP_HUB_URL=http://localhost:8080/playersHub
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
